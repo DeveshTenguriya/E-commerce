@@ -1,23 +1,28 @@
 package com.example.E_commerce.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Entity
-@Table
+@Table(name = "products")
 @Setter
 @Getter
 public class Product extends BaseEntity{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
+    @Column(length = 1000)
     private String description;
+
     private BigDecimal price;
+
     private Integer stock;
 
     @ManyToOne
