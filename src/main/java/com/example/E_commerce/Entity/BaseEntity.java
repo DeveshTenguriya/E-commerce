@@ -1,6 +1,7 @@
 package com.example.E_commerce.Entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,7 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity
+@MappedSuperclass
 @Getter
 @Setter
 public class BaseEntity {
