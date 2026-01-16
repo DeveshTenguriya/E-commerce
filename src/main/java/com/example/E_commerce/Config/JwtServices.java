@@ -19,7 +19,7 @@ public class JwtServices {
     @Value("${app.jwt.expiration}")
     private Long Expiration;
 
- public String generateToken(UserDetails  userDetails) {
+ public String generateToken(UserDetails userDetails) {
      return Jwts.builder()
              .setSubject(userDetails.getUsername())
              .setIssuedAt(new Date())
@@ -37,6 +37,12 @@ public class JwtServices {
              .getBody()
              .getSubject();
 
+ }
+
+ public boolean validateToken(String token, UserDetails userDetails){
+     String username= extractUsername(token);
+
+    return username.equals(userDetails.getUsername());
  }
 
 }

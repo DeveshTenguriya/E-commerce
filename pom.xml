@@ -84,7 +84,6 @@
 			<scope>test</scope>
 		</dependency>
 
-        // these dependencies are for jwt
         <!-- JJWT API -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
