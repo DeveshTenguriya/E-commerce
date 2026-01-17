@@ -16,6 +16,11 @@ public class ECommerceApplication {
         System.out.println("devesh tenguriya");
 	}
 
+    //{
+    //    "password": "Hinata8220",
+    //    "email":"naruto@example.com"
+    //}
+
     //com.example.ecommerce
     //│
     //├── config
