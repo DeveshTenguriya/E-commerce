@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = null;
         String username= null;
 
-        //extract token and username from previously generated token during register
+        //extract token and username from previously generated token during login
         if (authHeader!=null && authHeader.startsWith("Bearer ")) {
             token= authHeader.substring(7);
             username= jwtServices.extractUsername(token);
@@ -67,7 +67,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     userDetailService.loadUserByUsername(username);
 
             if (jwtServices.validateToken(token,userDetails)){
-
                 //Create Authentication object
                 //This tells Spring:
                 //User is authenticated

@@ -51,6 +51,7 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),request.getPassword()));
 
+        //userDetailServiceImpl executed in this step as this (userdetail) method was build in userDetailServiceImpl class
         UserDetails userDetails= new
                 org.springframework.security.core.userdetails.User(
                 request.getEmail(), "", List.of());
