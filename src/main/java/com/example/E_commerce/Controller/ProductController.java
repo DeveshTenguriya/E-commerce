@@ -22,4 +22,10 @@ public class ProductController {
 
         return ResponseEntity.ok(productService.create(product,categoryId));
     }
+
+    @PostMapping(path = "/admin/{Id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Product> update(@PathVariable Long Id,@RequestBody Product update){
+       return ResponseEntity.ok(productService.update(Id, update));
+    }
 }

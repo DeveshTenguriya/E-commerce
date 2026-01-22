@@ -26,4 +26,17 @@ public class ProductService {
         product.setCategory(category);
        return productRepository.save(product);
     }
+
+    public Product update(Long Id , Product update){
+        Product product= productRepository.findById(Id)
+                .orElseThrow(()->
+                        new RuntimeException("Product not found"));
+
+        product.setName(update.getName());
+        product.setPrice(update.getPrice());
+        product.setStock(update.getStock());
+        product.setDescription(update.getDescription());
+
+         return  productRepository.save(product);
+    }
 }
