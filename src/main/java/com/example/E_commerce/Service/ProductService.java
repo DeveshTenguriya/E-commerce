@@ -6,6 +6,8 @@ import com.example.E_commerce.Repository.CategoryRepository;
 import com.example.E_commerce.Repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
 
@@ -15,6 +17,10 @@ public class ProductService {
     public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+    }
+
+    public List<Product> getAll(){
+        return productRepository.findAll();
     }
 
     public Product create(Product product, Long categoryId){
