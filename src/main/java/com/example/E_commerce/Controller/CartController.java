@@ -19,6 +19,11 @@ public class CartController {
         this.cartService = cartService;
     }
 
+    @GetMapping
+    public ResponseEntity<Cart> viewCart(Authentication auth) {
+        return ResponseEntity.ok(cartService.getCart(auth.getName()));
+    }
+
     @PostMapping(path = "/add/{productId}")
     public ResponseEntity<Cart> addItem(@PathVariable Long productId, @RequestParam Integer quantity, Authentication auth){
 
