@@ -18,9 +18,9 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping
-    //🧠 Why ResponseEntity is Important (Real Reasons)
-    //1️⃣ Control HTTP Status Codes
+
+    //Why ResponseEntity is Important
+    //1️ Control HTTP Status Codes
     //Correct REST behavior:
     //
     //POST → 201 CREATED
@@ -28,6 +28,8 @@ public class ProductController {
     //PUT → 200 OK
     //
     //DELETE → 204 NO CONTENT
+    @GetMapping
+    @PreAuthorize("hasRole('CUSTOMER','ADMIN')")
     public ResponseEntity<List<Product>> getAllProducts(){
        return ResponseEntity.ok(productService.getAll());
     }
