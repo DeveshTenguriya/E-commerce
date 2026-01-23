@@ -28,4 +28,10 @@ public class ProductController {
     public ResponseEntity<Product> update(@PathVariable Long Id,@RequestBody Product update){
        return ResponseEntity.ok(productService.update(Id, update));
     }
+
+    @DeleteMapping(path = "/{Id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void delete(@PathVariable Long Id){
+        productService.delete(Id);
+    }
 }
