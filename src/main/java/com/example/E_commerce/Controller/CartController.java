@@ -19,6 +19,7 @@ public class CartController {
         this.cartService = cartService;
     }
 
+    // get the product
     @GetMapping
     public ResponseEntity<Cart> viewCart(Authentication auth) {
         return ResponseEntity.ok(cartService.getCart(auth.getName()));
