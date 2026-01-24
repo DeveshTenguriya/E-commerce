@@ -7,7 +7,6 @@ import com.example.E_commerce.Entity.User;
 import com.example.E_commerce.Repository.CartRepository;
 import com.example.E_commerce.Repository.ProductRepository;
 import com.example.E_commerce.Repository.UserRepository;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
