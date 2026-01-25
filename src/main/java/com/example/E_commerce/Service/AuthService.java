@@ -46,6 +46,7 @@ public class AuthService {
 
     }
 
+    //to login the user
     public String login(UserLoginRequest request){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
