@@ -25,7 +25,8 @@ public class CartController {
         return ResponseEntity.ok(cartService.getCart(auth.getName()));
     }
 
-    //to add the product un the cart
+
+
     @PostMapping(path = "/add/{productId}")
     public ResponseEntity<Cart> addItem(@PathVariable Long productId, @RequestParam Integer quantity, Authentication auth){
 
