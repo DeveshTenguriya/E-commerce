@@ -36,7 +36,8 @@ public class CartService {
                 });
     }
 
-    // add the item in the cart
+
+
     public Cart addItem(Long productId, Integer quantity, String username){
 
         Cart cart= getCart(username);
