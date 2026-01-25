@@ -22,7 +22,8 @@ public class CartService {
         this.userRepository = userRepository;
     }
 
-    // get the product service
+
+
     public Cart getCart(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
