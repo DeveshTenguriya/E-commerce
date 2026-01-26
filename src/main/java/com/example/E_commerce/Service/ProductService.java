@@ -33,6 +33,7 @@ public class ProductService {
        return productRepository.save(product);
     }
 
+    //update the product by the put request mapping
     public Product update(Long Id , Product update){
         Product product= productRepository.findById(Id)
                 .orElseThrow(()->
