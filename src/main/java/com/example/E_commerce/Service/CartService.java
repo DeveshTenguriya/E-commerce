@@ -39,6 +39,7 @@ public class CartService {
 
 
 
+    // this function is to add the product in the cart
     public Cart addItem(Long productId, Integer quantity, String username){
 
         Cart cart= getCart(username);
