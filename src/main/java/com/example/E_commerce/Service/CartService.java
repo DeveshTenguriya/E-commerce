@@ -24,7 +24,7 @@ public class CartService {
 
 
 
-    // this function is to get the cart to the client
+
     public Cart getCart(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
