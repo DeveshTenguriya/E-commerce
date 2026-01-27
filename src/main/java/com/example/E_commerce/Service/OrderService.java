@@ -6,9 +6,11 @@ import com.example.E_commerce.Repository.OrderRepository;
 import com.example.E_commerce.Repository.ProductRepository;
 import com.example.E_commerce.Repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+@Service
 public class OrderService {
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
@@ -52,7 +54,7 @@ public class OrderService {
             oi.setQuantity(ci.getQuantity());
             oi.setPrice(product.getPrice());
 
-            order.getItems().add(oi);
+            order.getOrderItems().add(oi);
 
             total = total.add(
                     product.getPrice().multiply(

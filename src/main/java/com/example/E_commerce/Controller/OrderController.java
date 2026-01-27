@@ -3,9 +3,15 @@ package com.example.E_commerce.Controller;
 import com.example.E_commerce.Entity.Order;
 import com.example.E_commerce.Service.OrderService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping(path = "order")
+@PreAuthorize("hasRole('CUSTOMER')")
 public class OrderController {
 
     private final OrderService orderService;
