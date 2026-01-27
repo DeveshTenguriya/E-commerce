@@ -46,8 +46,7 @@ public class AuthService {
 
     }
 
-
-
+    //the login info is here
     public String login(UserLoginRequest request){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
