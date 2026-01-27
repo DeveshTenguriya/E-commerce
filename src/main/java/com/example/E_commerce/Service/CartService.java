@@ -23,8 +23,6 @@ public class CartService {
     }
 
 
-
-
     public Cart getCart(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -36,7 +34,6 @@ public class CartService {
                     return cartRepository.save(cart);
                 });
     }
-
 
 
     public Cart addItem(Long productId, Integer quantity, String username){

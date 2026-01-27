@@ -26,7 +26,6 @@ public class CartController {
     }
 
 
-
     @PostMapping(path = "/add/{productId}")
     public ResponseEntity<Cart> addItem(@PathVariable Long productId, @RequestParam Integer quantity, Authentication auth){
 
