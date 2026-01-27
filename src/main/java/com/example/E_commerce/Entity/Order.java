@@ -1,7 +1,9 @@
 package com.example.E_commerce.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -12,13 +14,15 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
     private BigDecimal totalAmount;
-    private String string;
+    private String status;
 
     @ManyToOne
     private User user;
