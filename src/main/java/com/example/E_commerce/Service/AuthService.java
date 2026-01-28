@@ -1,8 +1,8 @@
 package com.example.E_commerce.Service;
 
 import com.example.E_commerce.Config.JwtServices;
-import com.example.E_commerce.Dto.UserLoginRequest;
-import com.example.E_commerce.Dto.UserRegisterRequest;
+import com.example.E_commerce.Dto.request.UserLoginRequest;
+import com.example.E_commerce.Dto.response.UserRegisterRequest;
 import com.example.E_commerce.Entity.Role;
 import com.example.E_commerce.Entity.User;
 import com.example.E_commerce.Repository.UserRepository;
