@@ -46,6 +46,7 @@ public class AuthService {
 
     }
 
+    //this function is for login the user in the database
 
     public String login(UserLoginRequest request){
         authenticationManager.authenticate(
