@@ -1,13 +1,14 @@
 package com.example.E_commerce.Controller;
 
+import com.example.E_commerce.Dto.Order.orderRequest;
+import com.example.E_commerce.Dto.Order.orderResponse;
 import com.example.E_commerce.Entity.Order;
 import com.example.E_commerce.Service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/order")
@@ -21,8 +22,15 @@ public class OrderController {
     }
 
     @PostMapping("/place")
-    public ResponseEntity<Order> place(Authentication auth) {
-        return ResponseEntity.ok(orderService.placeOrder(auth.getName()));
+    public ResponseEntity<orderResponse> place(Authentication auth,@Valid @RequestBody orderRequest request) {
+        return ResponseEntity.ok(orderService.placeOrder(auth.getName(),request));
+    }
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<orderResponse> getOrder(
+            @PathVariable Long orderId) {
+
+        return ResponseEntity.ok(orderService.getOrderById(orderId));
     }
 
 }

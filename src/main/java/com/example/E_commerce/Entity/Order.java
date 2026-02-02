@@ -24,7 +24,7 @@ public class Order extends BaseEntity {
     private BigDecimal totalAmount;
 
     @Enumerated(EnumType.STRING)
-    private String status;
+    private orderStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
