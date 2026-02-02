@@ -20,3 +20,5 @@ public class orderResponse {
 
     private List<orderItemResponse> items;
 }
+
+//Used when fetching order details

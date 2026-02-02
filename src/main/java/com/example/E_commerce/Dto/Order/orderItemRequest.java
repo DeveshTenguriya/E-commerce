@@ -15,3 +15,6 @@ public class orderItemRequest {
     @Min(1)
     private int quantity;
 }
+
+//Client only sends IDs + quantity
+//Price comes from backend (never trust frontend)
