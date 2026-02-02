@@ -1,5 +1,6 @@
 package com.example.E_commerce.Dto.Order;
 
+import com.example.E_commerce.Entity.orderStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,11 +11,11 @@ import java.util.List;
 @Setter
 public class orderResponse {
 
-    private Long oderId;
+    private Long orderId;
 
     private Long userId;
 
-    private String status;
+    private orderStatus status;
 
     private BigDecimal totalAmount;
 
