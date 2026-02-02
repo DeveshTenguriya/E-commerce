@@ -22,11 +22,14 @@ public class Order extends BaseEntity {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
     private BigDecimal totalAmount;
+
+    @Enumerated(EnumType.STRING)
     private String status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<OrderItem> orderItems= new ArrayList<>();
 }
