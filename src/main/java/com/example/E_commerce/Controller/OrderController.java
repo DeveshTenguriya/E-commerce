@@ -2,7 +2,6 @@ package com.example.E_commerce.Controller;
 
 import com.example.E_commerce.Dto.Order.orderRequest;
 import com.example.E_commerce.Dto.Order.orderResponse;
-import com.example.E_commerce.Entity.Order;
 import com.example.E_commerce.Service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

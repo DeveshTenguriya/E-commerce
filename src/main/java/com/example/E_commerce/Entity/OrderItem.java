@@ -2,7 +2,6 @@ package com.example.E_commerce.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,7 @@ public class OrderItem {
     private Long id;
     private int quantity;
 
-    @Column(nullable = false)
+    @Column(nullable = false ,name = "price_at_purchase")
     private BigDecimal priceAtPurchase;
 
     @ManyToOne(fetch = FetchType.LAZY)
