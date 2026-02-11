@@ -3,6 +3,7 @@ package com.example.E_commerce.Config;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+@Slf4j
 @Service
 public class JwtServices {
 
@@ -20,12 +22,19 @@ public class JwtServices {
     private Long Expiration;
 
  public String generateToken(UserDetails userDetails) {
-     return Jwts.builder()
+     log.info("Generating JWT token for user={}", userDetails.getUsername());
+
+     String token = Jwts.builder()
              .setSubject(userDetails.getUsername())
              .setIssuedAt(new Date())
              .setExpiration(new Date(System.currentTimeMillis()+ Expiration))
              .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
              .compact();
+
+     log.debug("JWT token generated successfully for user={}",
+             userDetails.getUsername());
+
+     return token;
  }
 
 
