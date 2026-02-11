@@ -9,12 +9,14 @@ import com.example.E_commerce.Repository.OrderRepository;
 import com.example.E_commerce.Repository.ProductRepository;
 import com.example.E_commerce.Repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+@Slf4j
 @Service
 public class OrderService {
     private final CartRepository cartRepository;
@@ -34,11 +36,24 @@ public class OrderService {
     @Transactional
     public orderResponse placeOrder(String email, orderRequest request) {
 
+        log.info("Order placement started | userEmail={}", email);
+
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() ->{
+                    log.error("User not found during order placement | email={}", email);
+                    return   new RuntimeException("User not found");
+                });
 
         Cart cart = cartRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("Cart empty"));
+                .orElseThrow(() ->{
+                    log.error("Cart empty during order placement | userId={}", user.getId());
+                    return new RuntimeException("Cart empty");
+                });
+
+        if (cart.getItems().isEmpty()) {
+            log.warn("Attempt to place order with empty cart | userId={}", user.getId());
+            throw new RuntimeException("Cart is empty");
+        }
 
         Order order = new Order();
         order.setUser(user);
@@ -51,8 +66,16 @@ public class OrderService {
 
             Product product = ci.getProduct();
 
-            if (product.getStock() < ci.getQuantity())
+            log.debug("Processing product | productId={} | quantity={}",
+                    product.getId(), ci.getQuantity());
+
+            if (product.getStock() < ci.getQuantity()){
+                log.warn("Insufficient stock | productId={} | requested={} | available={}",
+                        product.getId(),
+                        ci.getQuantity(),
+                        product.getStock());
                 throw new RuntimeException("Insufficient stock");
+            }
 
             product.setStock(product.getStock() - ci.getQuantity());
 
@@ -74,6 +97,11 @@ public class OrderService {
         cart.getItems().clear(); // Empty cart after order
 
         Order saveOrder=  orderRepository.save(order);
+
+        log.info("Order placed successfully | orderId={} | userId={} | totalAmount={}",
+                saveOrder.getId(),
+                user.getId(),
+                saveOrder.getTotalAmount());
 
         return mapToOrderResponse(saveOrder);
     }
