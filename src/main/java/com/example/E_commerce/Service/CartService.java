@@ -7,8 +7,10 @@ import com.example.E_commerce.Entity.User;
 import com.example.E_commerce.Repository.CartRepository;
 import com.example.E_commerce.Repository.ProductRepository;
 import com.example.E_commerce.Repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class CartService {
 
@@ -24,25 +26,42 @@ public class CartService {
 
 
     public Cart getCart(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return cartRepository.findByUser(user)
-                .orElseGet(() -> {
-                    Cart cart = new Cart();
-                    cart.setUser(user);
-                    return cartRepository.save(cart);
+        log.info("Fetching cart for user | email={}", email);
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->{
+                    log.error("User not found while fetching cart | email={}", email);
+                     return new RuntimeException("User not found");
                 });
+
+        Cart cart= cartRepository.findByUser(user)
+                .orElseGet(() -> {
+                    log.info("Cart not found, creating new cart | email={}", email);
+                    Cart newCart = new Cart();
+                    newCart.setUser(user);
+                    return cartRepository.save(newCart);
+                });
+
+        log.debug("Cart retrieved successfully | cartId={}", cart.getId());
+
+        return cart;
     }
 
 
     public Cart addItem(Long productId, Integer quantity, String username){
 
+        log.info("Adding item to cart | productId={} | quantity={} | user={}",
+                productId, quantity, username);
+
         Cart cart= getCart(username);
 
         Product product= productRepository.findById(productId)
-                .orElseThrow(()->
-                        new RuntimeException("product not found"));
+                .orElseThrow(()->{
+                    log.error("Product not found while adding to cart | productId={}",
+                            productId);
+                    return new RuntimeException("product not found");
+                });
 
         CartItem item= new CartItem();
 

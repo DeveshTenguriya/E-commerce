@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
 
             Category category = categoryRepository.findById(request.getCategoryId())
                     .orElseThrow(() ->{
-                            log.error("Category not found | categoryId={}",
+                            log.error("Category not founded | categoryId={}",
                                     request.getCategoryId());
                            return new RuntimeException("Category not found");
                     });
