@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 //JwtFilter intercepts every HTTP request, extracts and validates the JWT token, loads the user, and sets authentication in Spring Security’s context.
 //Because it extends OncePerRequestFilter:
@@ -53,10 +55,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = null;
         String username= null;
 
+        log.debug("JWT Filter triggered for request: {}", request.getRequestURI());
+
         //extract token and username from previously generated token during login
         if (authHeader!=null && authHeader.startsWith("Bearer ")) {
             token= authHeader.substring(7);
             username= jwtServices.extractUsername(token);
+            log.debug("Username extracted from token: {}", username);
         }
 
         //Check if authentication already exists : (SecurityContextHolder.getContext().getAuthentication()== null)
@@ -91,8 +96,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .getContext()
                         .setAuthentication(authToken);
 
-                System.out.println(userDetails.getAuthorities());
+                log.info("JWT authentication successful | username={} | roles={}",
+                        username,
+                        userDetails.getAuthorities());
 
+                System.out.println(userDetails.getAuthorities());
             }
         }
 
