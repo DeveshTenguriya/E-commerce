@@ -7,11 +7,13 @@ import com.example.E_commerce.Entity.Product;
 import com.example.E_commerce.Repository.CategoryRepository;
 import com.example.E_commerce.Repository.ProductRepository;
 import com.example.E_commerce.Service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -27,6 +29,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<productResponse> getAll(){
+
+        log.info("Fetching all products");
+
         return productRepository.findAll()
                 .stream()
                 .map(this::mapToResponse)
@@ -36,23 +41,37 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public productResponse create(productRequest request, Long categoryId){
 
+        log.info("Creating new product | name={}", request.getName());
+
         Product product = modelMapper.map(request,Product.class);
 
         Category category= categoryRepository.findById(categoryId)
-                .orElseThrow(()->
-                        new RuntimeException("Category not found"));
+                .orElseThrow(()->{
+                    log.error("Category not found | categoryId={}", categoryId);
+                         return new RuntimeException("Category not found");
+                });
+
 
         product.setCategory(category);
 
         Product saveProduct= productRepository.save(product);
+
+        log.info("Product created successfully | productId={} | categoryId={}",
+                saveProduct.getId(), categoryId);
+
        return mapToResponse(saveProduct);
     }
 
     @Override
     public productResponse update(Long Id , productRequest request){
+
+        log.info("Updating product | productId={}", Id);
+
         Product product= productRepository.findById(Id)
-                .orElseThrow(()->
-                        new RuntimeException("Product not found"));
+                .orElseThrow(()->{
+                    log.error("Product not found | productId={}", Id);
+                       return new RuntimeException("Product not found");
+                });
 
         modelMapper.map(request,product);// this line is equal to all these lines
         //product.setName(request.getName());
@@ -61,23 +80,37 @@ public class ProductServiceImpl implements ProductService {
         //product.setDescription(request.getDescription());
 
         if (request.getCategoryId() != null) {
+            log.debug("Updating category for product | productId={}", Id);
+
             Category category = categoryRepository.findById(request.getCategoryId())
-                    .orElseThrow(() -> new RuntimeException("Category not found"));
+                    .orElseThrow(() ->{
+                            log.error("Category not found | categoryId={}",
+                                    request.getCategoryId());
+                           return new RuntimeException("Category not found");
+                    });
             product.setCategory(category);
         }
 
         Product updated = productRepository.save(product);
+
+        log.info("Product updated successfully | productId={}", Id);
+
          return  mapToResponse(updated);
     }
 
     @Override
     public void delete(Long Id){
 
+        log.warn("Deleting product | productId={}", Id);
+
         Product product = productRepository.findById(Id)
-                .orElseThrow(()->
-                        new RuntimeException("Product not found"));
+                .orElseThrow(()->{
+                    log.error("Product does not exists | productId={}", Id);
+                       return new RuntimeException("Product not found");
+                });
 
         productRepository.delete(product);
+        log.info("Product deleted successfully | productId={}", Id);
     }
 
     private productResponse mapToResponse(Product product) {
