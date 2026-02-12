@@ -2,8 +2,6 @@ package com.example.E_commerce.Controller;
 
 import com.example.E_commerce.Dto.request.productRequest;
 import com.example.E_commerce.Dto.response.productResponse;
-import com.example.E_commerce.Entity.Product;
-import com.example.E_commerce.Service.Impl.ProductServiceImpl;
 import com.example.E_commerce.Service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
