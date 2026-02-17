@@ -22,6 +22,6 @@ public class ECommerceApplication {
     //}
 //polynomial1, 1regulariztion ,
 
-    // something other than that
+    // the work was done for today
 
 }
