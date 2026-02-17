@@ -20,6 +20,6 @@ public class ECommerceApplication {
     //    "password": "Hinata8220",
     //    "email":"naruto@example.com"
     //}
-
+//polynomial1, 1regulariztion ,
 
 }
