@@ -19,18 +19,18 @@ import java.io.IOException;
 @Component
 //JwtFilter intercepts every HTTP request, extracts and validates the JWT token, loads the user, and sets authentication in Spring Security’s context.
 //Because it extends OncePerRequestFilter:
-//
+
 //✅ It runs ONCE for EVERY HTTP request
 //Examples:
-//
-///login
-//
-///api/orders
-//
-///api/cart
-//
-///api/admin
-//
+
+//login
+
+//api/orders
+
+//api/cart
+
+//api/admin
+
 //(Spring Security decides which requests actually require authentication.)
 //JwtFilter is a Spring Security filter that executes once per request, extracts and validates the JWT token, loads user details, and populates the SecurityContext to enable authorization.
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
