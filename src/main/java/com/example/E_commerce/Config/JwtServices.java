@@ -21,37 +21,37 @@ public class JwtServices {
     @Value("${app.jwt.expiration}")
     private Long Expiration;
 
- public String generateToken(UserDetails userDetails) {
-     log.info("Generating JWT token for user={}", userDetails.getUsername());
+    public String generateToken(UserDetails userDetails) {
+        log.info("Generating JWT token for user={}", userDetails.getUsername());
 
-     String token = Jwts.builder()
-             .setSubject(userDetails.getUsername())
-             .setIssuedAt(new Date())
-             .setExpiration(new Date(System.currentTimeMillis()+ Expiration))
-             .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
-             .compact();
+        String token = Jwts.builder()
+            .setSubject(userDetails.getUsername())
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis()+ Expiration))
+            .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
+            .compact();
 
-     log.debug("JWT token generated successfully for user={}",
-             userDetails.getUsername());
+            log.debug("JWT token generated successfully for user={}",
+            userDetails.getUsername());
 
-     return token;
- }
+        return token;
+    }
 
 
- public String extractUsername(String token) {
-     return Jwts.parserBuilder()
-             .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)))
-             .build()
-             .parseClaimsJws(token)
-             .getBody()
-             .getSubject();
+    public String extractUsername(String token) {
+        return Jwts.parserBuilder()
+            .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)))
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
 
- }
+    }
 
- public boolean validateToken(String token, UserDetails userDetails){
-     String username= extractUsername(token);
+    public boolean validateToken(String token, UserDetails userDetails){
+       String username= extractUsername(token);
 
-    return username.equals(userDetails.getUsername());
- }
+       return username.equals(userDetails.getUsername());
+    }
 
 }
